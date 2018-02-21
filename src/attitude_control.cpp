@@ -11,7 +11,7 @@ ros::Publisher pub_setpoint;
 
 mavros_msgs::AttitudeTarget setpoint;
 
-uint16_t attitude_control = 
+uint16_t attitude_control = IGNORE_ATTITUDE | IGNORE_THRUST; 
 
 
 

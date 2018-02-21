@@ -36,7 +36,7 @@ void joystickCallback(const geometry_msgs::Twist& input){
 
 int main(int argc, char **argv)
 {
-	ros::init(argc, argv, "joystick_repeater"); 
+	ros::init(argc, argv, "attitude_control"); 
 	ros::NodeHandle n;
 
 	ros::Subscriber sub_joystick = n.subscribe("spacenav/twist", 100, joystickCallback); 

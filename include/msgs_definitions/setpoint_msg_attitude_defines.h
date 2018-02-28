@@ -6,6 +6,3 @@
 #define IGNORE_YAW_RATE (1 << 2)
 #define IGNORE_THRUST (1<< 6)
 #define IGNORE_ATTITUDE (1 << 7)
-
-
-#endif

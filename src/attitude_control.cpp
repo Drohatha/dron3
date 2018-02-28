@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <mavros_msgs/AttitudeTarget.h>
+#include <sensor_msgs/Joy.h>
 #include <msgs_definitions/setpoint_msg_attitude_defines.h>
 #include <tf/transform_datatypes.h>
 
@@ -11,7 +12,7 @@ ros::Publisher pub_setpoint;
 
 mavros_msgs::AttitudeTarget setpoint;
 
-uint16_t attitude_control = IGNORE_ATTITUDE | IGNORE_THRUST; 
+uint16_t attitude_control = 0; 
 
 
 
@@ -30,6 +31,30 @@ void joystickCallback(const geometry_msgs::Twist& input){
 	pub_setpoint.publish(setpoint);
 }
 
+void buttonCallback(const sensor_msgs::Joy& input){
+
+	static int button_pushed = 0; 
+	static int button_2_pushed = 0; 
+
+	if(!button_pushed && input.buttons[0]){
+		setpoint.thrust += 0.01; 
+		button_pushed = 1; 
+	}
+	if(!button_2_pushed && input.buttons[1]){
+		setpoint.thrust -= 0.01; 
+		if(setpoint.thrust < 0.0){
+			setpoint.thrust = 0.0; 
+		}
+		button_2_pushed = 1; 
+	}
+
+
+	button_pushed = input.buttons[0];
+	button_2_pushed = input.buttons[1]; 
+	pub_setpoint.publish(setpoint); 
+}
+
+
 
 
 int main(int argc, char **argv)
@@ -37,9 +62,14 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "attitude_control"); 
 	ros::NodeHandle n;
 
-	ros::Subscriber sub_joystick = n.subscribe("spacenav/twist", 100, joystickCallback); 
+	setpoint.thrust = 0.5; 
 
-	pub_setpoint = n.advertise<mavros_msgs::AttitudeTarget>("/mavros/setpoint_raw/local", 100);
+	ros::Subscriber sub_joystick = n.subscribe("spacenav/twist", 100, joystickCallback);
+	ros::Subscriber sub_buttons = n.subscribe("spacenav/joy", 100, buttonCallback); 
+
+	pub_setpoint = n.advertise<mavros_msgs::AttitudeTarget>("/mavros/setpoint_raw/attitude", 100);
+
+
 
 	ros::spin();
 

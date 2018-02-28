@@ -19,12 +19,13 @@ uint16_t velocity_control = IGNORE_PX | IGNORE_PY | IGNORE_PZ |
 
 void joystickCallback(const geometry_msgs::Twist& input){
 
-	setpoint.coordinate_frame = mavros_msgs::PositionTarget::FRAME_LOCAL_NED;
+	setpoint.header.stamp = ros::Time::now(); 
+	setpoint.coordinate_frame = mavros_msgs::PositionTarget::FRAME_BODY_NED;
 	setpoint.type_mask = velocity_control;
 	setpoint.velocity.x = 3.0*input.linear.x;
 	setpoint.velocity.y = 3.0*input.linear.y;
 	setpoint.velocity.z = input.linear.z;				
-	setpoint.header.frame_id = "body";
+	setpoint.header.frame_id = "fcu";
 	setpoint.yaw = -PI_HALF;
 	setpoint.yaw_rate = input.angular.z; 
 	pub_setpoint.publish(setpoint);

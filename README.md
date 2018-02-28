@@ -7,7 +7,7 @@ How to compile and change the code:
 2. The source files is found in catkin_ws/src/dron3/src 
 3. Do the nescessary changes to these files. 
 4. Go to the catkin_ws folder in terminal and type catkin_make (this will build the code)
-5. If catkin_make worked without errors, type source /devel/setup.sh in the same folder (catkin_ws) (Now ros can find the node)
+5. If catkin_make worked without errors, type source devel/setup.sh in the same folder (catkin_ws) (Now ros can find the node)
 
 Setting up the simulator: 
 

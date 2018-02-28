@@ -17,5 +17,8 @@ catkin_package()
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(joystick_repeater src/main.cpp)
+add_executable(attitude_repeater src/attitude_control.cpp)
+
 
 target_link_libraries(joystick_repeater ${catkin_LIBRARIES})
+target_link_libraries(attitude_repeater ${catkin_LIBRARIES})

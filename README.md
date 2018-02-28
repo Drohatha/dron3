@@ -1,5 +1,15 @@
-# dron3
+# dron3h
 Dron3
+
+
+How to install ROS and Gazebo! 
+
+In the directory you will find the script install_ros_and_gazebo.sh 
+Download this to any folder and in a terminal type: source install_ros_and_gazebo.sh
+
+
+After the installation you will now have a folder called catkin_ws. Move into this in the terminal and type catkin_make.
+
 
 How to compile and change the code:
 
@@ -15,6 +25,8 @@ Setting up the simulator:
 2. In one terminal, Go to the folder src/PX4_2018) and type make posix_sitl_default gazebo (Starting up the simulator)
 3. In another terminal type: roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557" 
 (Setting up communication between mavros and simulator)
+
+If an error occur you might have to run the script: install_geo_lib.sh found in the git directory. (Use: source install_geo_lib.sh)
 
 4  In another terminal type: roslaunch spacenav_node classic.launch 
 (starting the 3D mouse) use: rostopic list and rostopic echo "the topic" to check if you get data

@@ -12,7 +12,7 @@ ros::Publisher pub_setpoint;
 
 mavros_msgs::AttitudeTarget setpoint;
 
-uint16_t attitude_control = 0; 
+uint16_t attitude_control = IGNORE_ATTITUDE; 
 
 
 
@@ -25,6 +25,11 @@ void joystickCallback(const geometry_msgs::Twist& input){
 	setpoint.orientation.y = q[1]; 
 	setpoint.orientation.z = q[2];
 	setpoint.orientation.w = q[3];
+
+	setpoint.body_rate.x = 5*input.angular.x; 
+	setpoint.body_rate.y = 5*input.angular.y; 
+	setpoint.body_rate.z = 5*input.angular.z; 
+
 	setpoint.type_mask = attitude_control;
 	setpoint.header.frame_id = "fcu";
 
@@ -68,8 +73,6 @@ int main(int argc, char **argv)
 	ros::Subscriber sub_buttons = n.subscribe("spacenav/joy", 100, buttonCallback); 
 
 	pub_setpoint = n.advertise<mavros_msgs::AttitudeTarget>("/mavros/setpoint_raw/attitude", 100);
-
-
 
 	ros::spin();
 

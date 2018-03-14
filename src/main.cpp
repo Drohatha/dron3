@@ -22,12 +22,12 @@ void joystickCallback(const geometry_msgs::Twist& input){
 	setpoint.header.stamp = ros::Time::now(); 
 	setpoint.coordinate_frame = mavros_msgs::PositionTarget::FRAME_BODY_NED;
 	setpoint.type_mask = velocity_control;
-	setpoint.velocity.x = 3.0*input.linear.x;
-	setpoint.velocity.y = 3.0*input.linear.y;
-	setpoint.velocity.z = input.linear.z;				
+	setpoint.velocity.x = -6.0*input.linear.y; // X
+	setpoint.velocity.y = 6.0*input.linear.x; //Y
+	setpoint.velocity.z = 3.0*input.linear.z;				
 	setpoint.header.frame_id = "fcu";
 	setpoint.yaw = -PI_HALF;
-	setpoint.yaw_rate = input.angular.z; 
+	setpoint.yaw_rate = 2.0*input.angular.z; 
 	pub_setpoint.publish(setpoint);
 }
 
